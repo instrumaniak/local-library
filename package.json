@@ -1,6 +1,6 @@
 {
-  "name": "tutorial",
-  "version": "0.0.0",
+  "name": "express-mongoose-tutorial",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "cross-env DEBUG=tutorial:* yarn dev-start",

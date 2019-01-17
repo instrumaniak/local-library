@@ -1,3 +1,8 @@
+/**
+ *  Bootstraped using Express generator
+ *  with SASS & EJS support
+ */
+
 const createError = require('http-errors')
 const express = require('express')
 const mongoose = require('mongoose')
