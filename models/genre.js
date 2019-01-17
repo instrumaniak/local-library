@@ -17,4 +17,4 @@ GenreSchema
   .get(() => `/catalog/genre/${this._id}`)
 
 // Export model
-module.exports = mongoose.mode('Genre', GenreSchema)  
+module.exports = mongoose.model('Genre', GenreSchema)  
