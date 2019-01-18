@@ -3,6 +3,7 @@
  *  with SASS & EJS support
  */
 
+// import required packages
 const createError = require('http-errors')
 const express = require('express')
 const mongoose = require('mongoose')
@@ -11,10 +12,16 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const sassMiddleware = require('node-sass-middleware')
 
+// import routes
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const catalogRouter = require('./routes/catalog')
 
-// Setup mongoose connection
+
+/**
+ * Setup mongodb/mongoose
+ */
+
 const mongoDBURL = 'mongodb://localhost/local-library'
 mongoose.connect(mongoDBURL, { useNewUrlParser: true })
 
@@ -25,9 +32,13 @@ db.on('error', console.error.bind(
   console, 'MongoDB connection error:'
 ))
 
+
+/**
+ * Setup Express
+ */
+
 const app = express()
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
@@ -41,10 +52,13 @@ app.use(sassMiddleware({
   indentedSyntax: false, // true = .sass and false = .scss
   sourceMap: true
 }))
+
+// setup routes
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/catalog', catalogRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
