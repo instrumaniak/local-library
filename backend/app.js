@@ -1,6 +1,5 @@
 /**
- *  Bootstraped using Express generator
- *  with SASS & EJS support
+ *  Local Library API Server
  */
 
 // import required packages
@@ -10,7 +9,6 @@ const mongoose = require('mongoose')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
-const sassMiddleware = require('node-sass-middleware')
 
 // import routes
 const indexRouter = require('./routes/index')
@@ -39,23 +37,15 @@ db.on('error', console.error.bind(
 
 const app = express()
 
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
-
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(sassMiddleware({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public'),
-  indentedSyntax: false, // true = .sass and false = .scss
-  sourceMap: true
-}))
+
+// serve static
+//app.use(express.static(path.join(__dirname, 'public')))
 
 // setup routes
-app.use(express.static(path.join(__dirname, 'public')))
-
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
 app.use('/catalog', catalogRouter)
