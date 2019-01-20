@@ -10,7 +10,7 @@ const BookSchema = new Schema({
     required: true
   },
   summary: { type: String, required: true },
-  isbn: { type: String, required: true }, 
+  isbn: { type: String, required: true },
   genre: [{
     type: Schema.Types.ObjectId,
     ref: 'Genre'
@@ -23,4 +23,4 @@ BookSchema
   .get(() => `/catalog/book/${this._id}`)
 
 // Export model
-module.exports = mongoose.model('Book', BookSchema)  
+module.exports = mongoose.model('Book', BookSchema)
