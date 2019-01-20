@@ -9,6 +9,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const cors = require('cors')
 
 // import routes
 const indexRouter = require('./routes/index')
@@ -41,6 +42,7 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(cors())
 
 // serve static
 //app.use(express.static(path.join(__dirname, 'public')))
