@@ -15,12 +15,17 @@ const BookSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Genre'
   }]
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 })
 
 // Virtual for book's URL
 BookSchema
   .virtual('url')
-  .get(() => `/catalog/book/${this._id}`)
+  .get(function() {
+    return `/catalog/book/${this._id}`
+  })
 
 // Export model
 module.exports = mongoose.model('Book', BookSchema)

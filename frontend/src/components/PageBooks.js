@@ -23,9 +23,10 @@ class PageBooks extends Component {
         <ul>
           { total_books > 0 && book_list.map(book => (
               <li>
-                <Link to={`/category/book/${book._id}`}>
-                  {book.title} | {book.author.name}
+                <Link to={book.url}>
+                  {book.title}
                 </Link>
+                &nbsp; | {book.author.name}
               </li>
             ))
           }

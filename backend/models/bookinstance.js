@@ -21,12 +21,17 @@ const BookInstanceSchema = new Schema({
     default: 'Maintenance'
   },
   due_back: { type: Date, default: Date.now }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 })
 
 // Virtual for bookinstance's URL
 BookInstanceSchema
   .virtual('url')
-  .get(() => `/catalog/bookinstance/${this._id}`)
+  .get(function() {
+    return `/catalog/bookinstance/${this._id}`
+  })
 
 // Export the model
-module.exports = mongoose.model('BookInstance', BookInstanceSchema)  
+module.exports = mongoose.model('BookInstance', BookInstanceSchema)

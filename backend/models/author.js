@@ -15,26 +15,35 @@ const AuthorSchema = new Schema({
   },
   date_of_birth: { type: Date },
   date_of_death: { type: Date }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 })
 
 // Virtual for author's full name
 AuthorSchema
   .virtual('name')
-  .get(() => `${this.family_name}, ${this.first_name}`)
+  .get(function() {
+    return `${this.family_name}, ${this.first_name}`
+  })
 
 // Virtual for author's lifespan
 AuthorSchema
-  .virtual('lifespan')  
-  .get(() => (
-    this.date_of_death.getYear() -
-    this.date_of_birth.getYear()
-    ).toString()
-  )
+  .virtual('lifespan')
+  .get(function() {
+    let birth = this.date_of_birth.getYear()
+    let death = this.date_of_death ?
+                this.date_of_death.getYear() :
+                (new Date()).getYear()
+    return (death - birth).toString()
+  })
 
 // Virtual for authro's URL
 AuthorSchema
-  .virtual('url')  
-  .get(() => `/catalog/author/${this._id}`)
+  .virtual('url')
+  .get(function() {
+    return `/catalog/author/${this._id}`
+  })
 
 // Export model
 module.exports = mongoose.model('Author', AuthorSchema)
