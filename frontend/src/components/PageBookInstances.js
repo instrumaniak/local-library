@@ -40,7 +40,7 @@ class PageBookInstances extends Component {
                 <span>{' '}<Badge color={activeColor(item.status)}>{item.status}</Badge></span>
                 <div>{item.imprint}</div>
                 <div>{
-                  `${item.status !== 'Available' ? 'Due: ' + item.due_back : ''}`
+                  `${item.status !== 'Available' ? 'Due: ' + item.due_back_formatted : ''}`
                 }</div>
               </li>
           ))}
