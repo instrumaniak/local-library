@@ -29,3 +29,17 @@ export const getPageBooks = () => {
     }
   })
 }
+
+export const getPageBookInstances = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(URL.bookinstances)
+      const json = await res.json()
+
+      resolve(json)
+    }
+    catch {
+      reject({})
+    }
+  })
+}

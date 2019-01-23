@@ -22,8 +22,8 @@ class PageBooks extends Component {
       <div>
         <h1>{title}</h1>
         <ul>
-          { !isEmpty(book_list) && book_list.map(book => (
-              <li>
+          { !isEmpty(book_list) && book_list.map((book, id) => (
+              <li key={id}>
                 <Link to={book.url}>
                   {book.title}
                 </Link>
