@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash.isempty'
-import { getPageGenres } from '../services'
+import { getData } from '../services'
+import { URL } from '../services/api-endpoints'
 
 class PageGenres extends Component {
   state = {
@@ -9,7 +10,7 @@ class PageGenres extends Component {
     genre_list: []
   }
   componentDidMount() {
-    getPageGenres()
+    getData(URL.genres)
       .then(data => this.setState(data))
   }
   render() {

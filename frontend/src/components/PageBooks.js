@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { getPageBooks } from '../services'
 import isEmpty from 'lodash.isempty'
+import { getData } from '../services'
+import { URL } from '../services/api-endpoints'
 
 class PageBooks extends Component {
   state = {
@@ -9,7 +10,7 @@ class PageBooks extends Component {
     book_list: []
   }
   componentDidMount() {
-    getPageBooks()
+    getData(URL.books)
       .then(data => this.setState(data))
   }
   render() {

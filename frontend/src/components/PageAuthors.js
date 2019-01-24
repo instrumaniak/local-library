@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash.isempty'
-import { getPageAuthors } from '../services'
+import { getData } from '../services'
+import { URL } from '../services/api-endpoints'
 
 class PageAuthors extends Component {
   state = {
@@ -9,7 +10,7 @@ class PageAuthors extends Component {
     author_list: []
   }
   componentDidMount() {
-    getPageAuthors()
+    getData(URL.authors)
       .then(data => this.setState(data))
   }
   render() {

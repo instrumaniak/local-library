@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Badge } from 'reactstrap'
 import isEmpty from 'lodash.isempty'
 import { Link } from 'react-router-dom'
-import { getPageBookInstances } from '../services'
+import { getData } from '../services'
+import { URL } from '../services/api-endpoints'
 
 class PageBookInstances extends Component {
   state = {
@@ -10,7 +11,7 @@ class PageBookInstances extends Component {
     bookinstance_list: []
   }
   componentDidMount() {
-    getPageBookInstances()
+    getData(URL.bookinstances)
       .then(data => this.setState(data))
   }
   render() {

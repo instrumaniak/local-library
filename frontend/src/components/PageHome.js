@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { getPageHome } from '../services'
 import isEmpty from 'lodash.isempty'
+import { getData } from '../services'
+import { URL } from '../services/api-endpoints'
 
 class PageHome extends Component {
   state = {
@@ -9,7 +10,7 @@ class PageHome extends Component {
     data: {}
   }
   componentDidMount() {
-    getPageHome()
+    getData(URL.home)
       .then(data => this.setState(data))
   }
   render() {
