@@ -9,5 +9,6 @@ export const URL = {
   genres: `${basePath}/catalog/genres`,
 
   //details with id
-  genre: `${basePath}/catalog/genre/`
+  genre: `${basePath}/catalog/genre/`,
+  book: `${basePath}/catalog/book/`
 }

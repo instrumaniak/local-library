@@ -6,25 +6,25 @@ const Author = require('../models/author')
 const Genre = require('../models/genre')
 const BookInstance = require('../models/bookinstance')
 
-exports.index = function(req, res) {
+exports.index = (req, res) => {
   async.parallel({
-    book_count: function(callback) {
+    book_count(callback) {
       Book.countDocuments({}, callback) // find all
     },
-    book_instance_count: function(callback) {
+    book_instance_count(callback) {
       BookInstance.countDocuments({}, callback)
     },
-    book_instance_available_count: function(callback) {
+    book_instance_available_count(callback) {
       BookInstance.countDocuments({ status: 'Available'}, callback)
     },
-    author_count: function(callback) {
+    author_count(callback) {
       Author.countDocuments({}, callback)
     },
-    genre_count: function(callback) {
+    genre_count(callback) {
       Genre.countDocuments({}, callback)
-    }
-  },
-    function(err, results) {
+    }},
+
+    (err, results) => {
       res.json({
         title: 'Local Library Home',
         error: err,
@@ -34,7 +34,7 @@ exports.index = function(req, res) {
 }
 
 // Display list of all books.
-exports.book_list = function(req, res, next) {
+exports.book_list = (req, res, next) => {
   Book.find({}, 'title author')
     .populate('author')
     .exec((err, list_books) => {
@@ -48,8 +48,35 @@ exports.book_list = function(req, res, next) {
 }
 
 // Display detail page for a specific book.
-exports.book_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id)
+exports.book_detail = (req, res, next) => {
+  const { id } = req.params
+
+  async.parallel({
+    book(callback) {
+      Book.findById(id)
+        .populate('author')
+        .populate('genre')
+        .exec(callback)
+    },
+    book_instance(callback) {
+      BookInstance.find({ 'book': id })
+        .exec(callback)
+    }},
+
+    (err, results) => {
+      if(err) { return next(err) }
+      if(results.book==null) { // No results
+        const err = new Error('Book not found')
+        err.status = 404
+        return next(err)
+      }
+
+      res.json({
+        title: 'Title',
+        book: results.book,
+        book_instances: results.book_instance
+      })
+    })
 }
 
 // Display book create form on GET.
