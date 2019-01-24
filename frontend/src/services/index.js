@@ -6,7 +6,6 @@ export const getPageHome = () => {
     try {
       const res = await fetch(URL.home)
       const json = await res.json()
-
       resolve(json)
     }
     catch {
@@ -21,7 +20,6 @@ export const getPageBooks = () => {
     try {
       const res = await fetch(URL.books)
       const json = await res.json()
-
       resolve(json)
     }
     catch {
@@ -35,7 +33,19 @@ export const getPageBookInstances = () => {
     try {
       const res = await fetch(URL.bookinstances)
       const json = await res.json()
+      resolve(json)
+    }
+    catch {
+      reject({})
+    }
+  })
+}
 
+export const getPageAuthors = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(URL.authors)
+      const json = await res.json()
       resolve(json)
     }
     catch {

@@ -11,9 +11,7 @@ class PageBookInstances extends Component {
   }
   componentDidMount() {
     getPageBookInstances()
-      .then(data => {
-        this.setState(data)
-      })
+      .then(data => this.setState(data))
   }
   render() {
     const { title, bookinstance_list } = this.state

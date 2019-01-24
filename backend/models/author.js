@@ -1,3 +1,4 @@
+const moment = require('moment')
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
@@ -31,11 +32,23 @@ AuthorSchema
 AuthorSchema
   .virtual('lifespan')
   .get(function() {
-    let birth = this.date_of_birth.getYear()
-    let death = this.date_of_death ?
-                this.date_of_death.getYear() :
-                (new Date()).getYear()
-    return (death - birth).toString()
+    // only calculate lifespan if both field data exist
+    if( this.date_of_birth &&
+        this.date_of_death ) {
+
+      let birth = moment(this.date_of_birth).format('YYYY')
+      let death = moment(this.date_of_death).format('YYYY')
+
+      return `${birth} - ${death}`
+    }
+    else if(this.date_of_birth && !this.date_of_death) {
+      let birth = moment(this.date_of_birth).format('YYYY')
+
+      return `${birth} - `
+    }
+    else {
+      return ''
+    }
   })
 
 // Virtual for authro's URL

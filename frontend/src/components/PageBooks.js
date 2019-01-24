@@ -10,9 +10,7 @@ class PageBooks extends Component {
   }
   componentDidMount() {
     getPageBooks()
-      .then(data => {
-        this.setState(data)
-      })
+      .then(data => this.setState(data))
   }
   render() {
     const { title, book_list } = this.state

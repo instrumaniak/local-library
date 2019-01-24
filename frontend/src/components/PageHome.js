@@ -10,9 +10,7 @@ class PageHome extends Component {
   }
   componentDidMount() {
     getPageHome()
-      .then(data => {
-        this.setState(data)
-      })
+      .then(data => this.setState(data))
   }
   render() {
     const { title, error, data } = this.state
