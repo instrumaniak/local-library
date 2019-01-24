@@ -53,3 +53,16 @@ export const getPageAuthors = () => {
     }
   })
 }
+
+export const getPageGenres = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(URL.genres)
+      const json = await res.json()
+      resolve(json)
+    }
+    catch {
+      reject({})
+    }
+  })
+}

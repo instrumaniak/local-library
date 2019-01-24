@@ -4,5 +4,6 @@ export const URL = {
   home: `${basePath}/catalog`,
   books: `${basePath}/catalog/books`,
   bookinstances: `${basePath}/catalog/bookinstances`,
-  authors: `${basePath}/catalog/authors`
+  authors: `${basePath}/catalog/authors`,
+  genres: `${basePath}/catalog/genres`,
 }
