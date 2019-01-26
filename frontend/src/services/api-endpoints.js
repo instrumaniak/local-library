@@ -8,7 +8,8 @@ export const URL = {
   authors: `${basePath}/catalog/authors`,
   genres: `${basePath}/catalog/genres`,
 
-  //details with id
+  //details with id which have to be appended to the url
   genre: `${basePath}/catalog/genre/`,
-  book: `${basePath}/catalog/book/`
+  book: `${basePath}/catalog/book/`,
+  author: `${basePath}/catalog/author/`
 }
