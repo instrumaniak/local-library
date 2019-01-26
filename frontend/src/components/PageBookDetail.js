@@ -49,7 +49,7 @@ class PageBookDetail extends Component {
           <h4>Copies</h4>
           <hr/>
           {!isEmpty(book_instances) && book_instances.map((instance, idx) => (
-            <div>
+            <div key={idx}>
               <p><Link to={instance.url}>{instance.imprint}</Link></p>
               <p>Status: {instance.status} </p>
               <hr/>

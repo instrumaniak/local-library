@@ -1,7 +1,7 @@
 const moment = require('moment')
 const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema
+const { Schema } = mongoose
 
 const AuthorSchema = new Schema({
   first_name: {
