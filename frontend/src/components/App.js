@@ -7,10 +7,10 @@ class App extends Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-sm-2">
+          <div className="col-sm-2 side-navbar-container">
             <SideNavbar />
           </div>
-          <div className="col-sm-10">
+          <div className="col-sm-10 page-container">
             <PageRoutes />
           </div>
         </div>
