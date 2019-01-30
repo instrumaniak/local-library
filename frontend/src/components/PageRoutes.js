@@ -9,6 +9,7 @@ import PageGenres from './PageGenres'
 import PageGenreDetail from './PageGenreDetail'
 import PageBookDetail from './PageBookDetail'
 import PageAuthorDetail from './PageAuthorDetail'
+import PageBookInstanceDetail from './PageBookInstanceDetail'
 
 const PageRoutes = () => (
   <Fragment>
@@ -18,9 +19,10 @@ const PageRoutes = () => (
     <Route path='/catalog/authors' component={ PageAuthors } />
     <Route path='/catalog/genres' component={ PageGenres } />
 
-    <Route path='/catalog/genre/:id' component={ PageGenreDetail } />
     <Route path='/catalog/book/:id' component={ PageBookDetail } />
+    <Route path='/catalog/bookinstance/:id' component={ PageBookInstanceDetail } />
     <Route path='/catalog/author/:id' component={ PageAuthorDetail } />
+    <Route path='/catalog/genre/:id' component={ PageGenreDetail } />
   </Fragment>
 )
 

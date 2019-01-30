@@ -11,5 +11,6 @@ export const URL = {
   //details with id which have to be appended to the url
   genre: `${basePath}/catalog/genre/`,
   book: `${basePath}/catalog/book/`,
-  author: `${basePath}/catalog/author/`
+  author: `${basePath}/catalog/author/`,
+  bookinstance: `${basePath}/catalog/bookinstance/`
 }
