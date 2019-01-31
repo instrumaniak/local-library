@@ -14,10 +14,10 @@ const SideNavBar = () => (
 
     <li><hr /></li>
     <li><strong>Create new</strong></li>
-    <li> <NavLink to="/catalog/author/create">Author</NavLink></li>
-    <li> <NavLink to="/catalog/genre/create">Genre</NavLink></li>
-    <li> <NavLink to="/catalog/book/create">Book</NavLink></li>
-    <li> <NavLink to="/catalog/bookinstance/create">Book instance (copy)</NavLink></li>
+    <li> <NavLink to="/catalog/create/author">Author</NavLink></li>
+    <li> <NavLink to="/catalog/create/genre">Genre</NavLink></li>
+    <li> <NavLink to="/catalog/create/book">Book</NavLink></li>
+    <li> <NavLink to="/catalog/create/bookinstance">Book instance (copy)</NavLink></li>
   </ul>
 )
 

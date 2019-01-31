@@ -1,8 +1,14 @@
 const async = require('async')
+const { body, validationResult } = require('express-validator/check')
+const { sanitizeBody } = require('express-validator/filter')
+
 const Genre = require('../models/genre')
 const Book = require('../models/book')
 
-// Display list of all Genre.
+/**
+ *  Display list of all Genre.
+ */
+
 exports.genre_list = function(req, res, next) {
   Genre.find({})
     .sort('name')
@@ -16,7 +22,10 @@ exports.genre_list = function(req, res, next) {
     })
 }
 
-// Display detail page for a specific Genre.
+
+/**
+ *  Display detail page for a specific Genre.
+ */
 exports.genre_detail = function(req, res, next) {
   async.parallel({
     genre(callback) {
@@ -45,15 +54,65 @@ exports.genre_detail = function(req, res, next) {
     })
 }
 
-// Display Genre create form on GET.
+
+/**
+ *  Display Genre create form on GET.
+ */
 exports.genre_create_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Genre create GET')
 }
 
-// Handle Genre create on POST.
-exports.genre_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre create POST')
-}
+
+/**
+ *  Handle Genre create on POST.
+ */
+exports.genre_create_post = [
+  // Validate that the name field is not empty
+  body('name', 'Genre name required').isLength({min: 1}).trim(),
+
+  // Sanitize (trim & scape) the name field
+  sanitizeBody('name').trim().escape(),
+
+  // Process request after validation and sanitization
+  (req, res, next) => {
+    // Extract the validation errors from a request
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()) {
+      // There are errors. Render the form again with
+      // sanitized values/error messages
+      res.json({
+        title: 'Create Genre',
+        //genre,
+        errors: errors.array()
+      })
+      return
+    }
+    else {
+      // Data from the form is valid
+      // Check if Genre with same name already exists
+      Genre.findOne({ 'name': req.body.name })
+        .exec((err, found_genre) => {
+          if(err) { return next(err)}
+          if(found_genre) {
+            res.redirect(found_genre.url)
+          }
+          else {
+            // Create a genre object with escaped and trimmed data
+            let genre = new Genre({
+              name: req.body.name
+            })
+            genre.save(err => {
+              if(err) { return next(err)}
+
+              // Genre saved, should go to genre detail page
+              res.redirect(genre.url)
+            })
+          }
+        })
+    }
+  }
+]
 
 // Display Genre delete form on GET.
 exports.genre_delete_get = function(req, res) {
