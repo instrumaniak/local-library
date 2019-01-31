@@ -1,0 +1,24 @@
+/**
+ *  Side Nav Bar
+ */
+
+.sidenavbar-container {
+  min-height: 100vh;
+  background-color: #eee;
+  border-right: 1px solid #ddd;
+}
+
+.sidenavbar {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+
+  a.active {
+    border-bottom: 0.1rem solid #aaa;
+  }
+
+}

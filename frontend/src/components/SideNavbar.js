@@ -1,20 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const SideNavBar = () => (
-  <ul className="sidebar-nav">
-    <li> <Link to="/">Home</Link></li>
-    <li> <Link to="/catalog/books">All books</Link></li>
-    <li> <Link to="/catalog/authors">All authors</Link></li>
-    <li> <Link to="/catalog/genres">All genres</Link></li>
-    <li> <Link to="/catalog/bookinstances">All book-instances</Link></li>
-    <li>
-      <hr />
-    </li>
-    <li> <Link to="/catalog/author/create">Create new author</Link></li>
-    <li> <Link to="/catalog/genre/create">Create new genre</Link></li>
-    <li> <Link to="/catalog/book/create">Create new book</Link></li>
-    <li> <Link to="/catalog/bookinstance/create">Create new book instance (copy)</Link></li>
+  <ul className="sidenavbar">
+    <li> <NavLink exact to="/">Home</NavLink></li>
+
+    <li><hr /></li>
+    <li><strong>Browse</strong></li>
+    <li> <NavLink to="/catalog/books">Books</NavLink></li>
+    <li> <NavLink to="/catalog/authors">Authors</NavLink></li>
+    <li> <NavLink to="/catalog/genres">Genres</NavLink></li>
+    <li> <NavLink to="/catalog/bookinstances">Book-instances</NavLink></li>
+
+    <li><hr /></li>
+    <li><strong>Create new</strong></li>
+    <li> <NavLink to="/catalog/author/create">Author</NavLink></li>
+    <li> <NavLink to="/catalog/genre/create">Genre</NavLink></li>
+    <li> <NavLink to="/catalog/book/create">Book</NavLink></li>
+    <li> <NavLink to="/catalog/bookinstance/create">Book instance (copy)</NavLink></li>
   </ul>
 )
 
