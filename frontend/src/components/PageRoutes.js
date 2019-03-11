@@ -13,7 +13,7 @@ import PageAuthorDetail from './PageAuthorDetail'
 import PageBookInstanceDetail from './PageBookInstanceDetail'
 
 import PageGenreCreate from './PageGenreCreate'
-
+import PageAuthorCreate from './PageAuthorCreate'
 
 const PageRoutes = () => (
   <Fragment>
@@ -24,6 +24,7 @@ const PageRoutes = () => (
     <Route path='/catalog/genres' component={ PageGenres } />
 
     <Route path='/catalog/create/genre' component={ PageGenreCreate } />
+    <Route path='/catalog/create/author' component={ PageAuthorCreate } />
 
     <Route path='/catalog/book/:id' component={ PageBookDetail } />
     <Route path='/catalog/bookinstance/:id' component={ PageBookInstanceDetail } />

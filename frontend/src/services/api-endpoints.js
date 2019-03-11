@@ -15,5 +15,6 @@ export const URL = {
   bookinstance: `${basePath}/catalog/bookinstance/`,
 
   // post method urls
-  genre_create: `${basePath}/catalog/genre/create`
+  genre_create: `${basePath}/catalog/genre/create`,
+  author_create: `${basePath}/catalog/author/create`
 }
