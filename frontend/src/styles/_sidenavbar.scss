@@ -2,13 +2,15 @@
  *  Side Nav Bar
  */
 
-.sidenavbar-container {
+.ll-sidenavbar-container {
   min-height: 100vh;
-  background-color: #eee;
-  border-right: 1px solid #ddd;
+  background-color: $light-gray;
+  border-right: 1px solid $light-gray-accent;
+
+
 }
 
-.sidenavbar {
+.ll-sidenavbar {
   margin-top: 20px;
   padding: 0;
   list-style: none;
@@ -20,5 +22,4 @@
   a.active {
     border-bottom: 0.1rem solid #aaa;
   }
-
 }

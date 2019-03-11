@@ -1,7 +1,12 @@
 /* Global Styles */
 
+// namespace all class names with 'll'
+// to prevent naming conflict
+// example: ll-navbar;
+
 @import 'variables';
 @import 'base';
 
+@import 'navbar';
 @import 'sidenavbar';
 @import 'pages';

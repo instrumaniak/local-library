@@ -2,10 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 const SideNavBar = () => (
-  <ul className="sidenavbar">
-    <li> <NavLink exact to="/">Home</NavLink></li>
-
-    <li><hr /></li>
+  <ul className="ll-sidenavbar">
     <li><strong>Browse</strong></li>
     <li> <NavLink to="/catalog/books">Books</NavLink></li>
     <li> <NavLink to="/catalog/authors">Authors</NavLink></li>
