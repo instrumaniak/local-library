@@ -23,8 +23,6 @@ class PageGenreCreate extends Component {
 
     postData(URL.genre_create, { name: genre_input })
       .then(data => {
-        console.log(data)
-
         if(isEmpty(data.errors)) {
           this.setState({
             genre_input: '',
