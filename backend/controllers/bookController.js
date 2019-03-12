@@ -1,4 +1,6 @@
 const async = require('async')
+const { body, validationResult } = require('express-validator/check')
+const { sanitizeBody } = require('express-validator/filter')
 
 // import models
 const Book = require('../models/book')
@@ -80,14 +82,83 @@ exports.book_detail = (req, res, next) => {
 }
 
 // Display book create form on GET.
-exports.book_create_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Book create GET')
+exports.book_create_get = function(req, res, next) {
+
+  // Get all authors & genres, which we can use for adding to our book
+  async.parallel({
+    authors(callback) {
+      Author.find(callback)
+    },
+
+    genres(callback) {
+      Genre.find(callback)
+    }},
+
+    (err, { authors, genres }) => {
+      if(err) return next(err)
+
+      res.json({
+        title: 'Create Book',
+        authors,
+        genres
+      })
+    })
 }
 
 // Handle book create on POST.
-exports.book_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Book create POST')
-}
+exports.book_create_post = [
+  // Convert the genre to an array
+  (req, res, next) => {
+    if(!(req.body.genre instanceof Array)) {
+      if(typeof req.body.genre === 'undefined')
+        req.body.genre = []
+      else
+        req.body.genre = new Array(req.body.genre)
+    }
+    next()
+  },
+
+  // Validate fields
+  body('title', 'Title must not be empty').isLength({ min: 1 }).trim(),
+  body('author', 'Author must not be empty').isLength({ min: 1 }).trim(),
+  body('summary', 'Summary must not be empty').isLength({ min: 1 }).trim(),
+  body('isbn', 'ISBN must not be empty').isLength({ min: 1 }).trim(),
+
+  // Sanitize fields (using wildcard)
+  sanitizeBody('*').trim().escape(),
+
+  // Process request after validation and sanitization
+  (req, res, next) => {
+    // Extract the validation errors from a request
+    const errors = validationResult(req)
+
+    // Create a Book object with escaped & trimmed data
+    const { title, author, summary, isbn, genre } = req.body
+
+    let book = new Book({
+      title,
+      author,
+      summary,
+      isbn,
+      genre
+    })
+
+    if(!errors.isEmpty()) {
+      // There are errors, just send those
+      res.json({ title: 'Create Book', errors: errors.array() })
+      return
+    }
+    else {
+      // Data is valid so save book.
+      book.save(err => {
+        if(err) return next(err)
+
+        res.redirect(book.url)
+      })
+    }
+  }
+
+]
 
 // Display book delete form on GET.
 exports.book_delete_get = function(req, res) {
