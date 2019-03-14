@@ -3,10 +3,12 @@
  */
 
 .ll-sidenavbar-container {
-  min-height: 95vh;
+  min-height: 100vh;
   background-color: $light-gray;
   border-right: 1px solid $light-gray-accent;
-
+  // position: absolute;
+  // top: 0;
+  // bottom: 0;
 
 }
 
@@ -19,11 +21,18 @@
     margin-bottom: 0.25rem;
   }
 
-  a.active {
-    border-bottom: 0.1rem solid #aaa;
+  a {
+
+    padding-left: 10px;
+
+    &.active {
+      border-left: 2px solid #aaa;
+      padding-left: 8px;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
-  a:hover {
-    text-decoration: none;
-  }
 }
