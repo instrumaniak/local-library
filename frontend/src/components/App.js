@@ -1,6 +1,4 @@
-import React, { Component, Fragment } from 'react'
-import { Navbar, NavbarBrand } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
 
 import SideNavbar from './SideNavbar'
 import PageRoutes from './PageRoutes'
