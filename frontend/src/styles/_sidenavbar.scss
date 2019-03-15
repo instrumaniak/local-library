@@ -4,12 +4,7 @@
 
 .ll-sidenavbar-container {
   min-height: 100vh;
-  background-color: $light-gray;
-  border-right: 1px solid $light-gray-accent;
-  // position: absolute;
-  // top: 0;
-  // bottom: 0;
-
+  background-color: lighten($ll-gray-black, 10%);
 }
 
 .ll-sidenavbar {
@@ -17,22 +12,54 @@
   padding: 0;
   list-style: none;
 
-  li {
-    margin-bottom: 0.25rem;
+  // hr {
+  //   background-color: $ll-gray-black;
+  // }
+
+  &__seperator {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin: 1.5rem 0px 1rem 0px;
   }
 
-  a {
-
-    padding-left: 10px;
-
-    &.active {
-      border-left: 2px solid #aaa;
-      padding-left: 8px;
-    }
-
-    &:hover {
+  &__title {
+    a {
+      font-size: 1.5rem;
+      color: lighten($ll-gray-light, 15%);
       text-decoration: none;
+
+      &:hover {
+        color: lighten($ll-gray-light, 40%);
+      }
+
+      &.active {
+        color: lighten($ll-gray-light, 40%);;
+      }
     }
   }
 
+  &__subtitle {
+    color: $ll-gray-light;
+    margin-bottom: 0.5rem;
+    padding-left: 5px;
+  }
+
+  &__link {
+    margin-bottom: 0.25rem;
+
+    a {
+      color: lighten($ll-gray-light, 30%);
+      padding-left: 10px;
+
+      &.active {
+        border-left: 2px solid lighten($ll-gray-light, 50%);;
+        padding-left: 8px;
+        color: lighten($ll-gray-light, 55%);
+      }
+
+      &:hover {
+        text-decoration: none;
+        color: lighten($ll-gray-light, 50%);
+      }
+    }
+  }
 }

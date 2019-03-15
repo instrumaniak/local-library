@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 //import global styles
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/index.scss'
 
 import App from './components/App'

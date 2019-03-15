@@ -1,10 +1,21 @@
-/* Global Styles */
-
-// namespace all class names with 'll'
-// to prevent naming conflict
-// example: ll-navbar;
+/**
+ *  Local Library Styles
+ *  class name & variable prefix: ll
+ */
 
 @import 'variables';
+
+// Bootstrap styles
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+$theme-colors: (
+  primary: $ll-blue
+);
+
+@import '~bootstrap/scss/bootstrap';
+
+// Project specific styles
 @import 'base';
 
 @import 'navbar';
