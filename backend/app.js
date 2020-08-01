@@ -23,13 +23,14 @@ const config = require('./config/db')
  * Setup mongodb/mongoose
  */
 
-mongoose.connect(config.MDB_URL, {
-  useNewUrlParser: true,
-  useCreateIndex: true
-})
+mongoose
+  .connect(config.MDB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('Connected to MongoDB!'))
-  .catch(err => console.log(err))
-
+  .catch((err) => console.log(err))
 
 /**
  * Setup Express
@@ -55,12 +56,12 @@ app.use('/users', usersRouter)
 app.use('/catalog', catalogRouter)
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404))
 })
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
