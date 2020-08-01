@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "cross-env DEBUG=tutorial:* yarn dev-start",
     "dev-start": "nodemon ./bin/www",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "seed": "node populatedb.js"
   },
   "dependencies": {
     "async": "^3.2.0",
@@ -25,6 +26,7 @@
     "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "eslint": "^7.6.0"
   }
 }
