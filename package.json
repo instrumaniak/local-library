@@ -1,0 +1,15 @@
+{
+  "name": "local-library-webapp",
+  "author": "Raziur Rahman",
+  "version": "0.1.0",
+  "description": "The local library web app.",
+  "private": true,
+  "scripts": {
+    "start": "cd api && yarn start",
+    "heroku-postbuild": "cd client && yarn && yarn run build && cd ../api && yarn"
+  },
+  "engines": {
+    "node": "12",
+    "yarn": "1.x"
+  }
+}

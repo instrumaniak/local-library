@@ -1,4 +1,4 @@
-const basePath = 'http://localhost:5000'
+const basePath = '/api'
 
 export const URL = {
   home: `${basePath}/catalog`,
@@ -16,5 +16,5 @@ export const URL = {
 
   // post method urls
   genre_create: `${basePath}/catalog/genre/create`,
-  author_create: `${basePath}/catalog/author/create`
+  author_create: `${basePath}/catalog/author/create`,
 }
