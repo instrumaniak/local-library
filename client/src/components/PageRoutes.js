@@ -14,22 +14,27 @@ import PageBookInstanceDetail from './PageBookInstanceDetail'
 
 import PageGenreCreate from './PageGenreCreate'
 import PageAuthorCreate from './PageAuthorCreate'
+import PageBookCreate from './PageBookCreate'
 
 const PageRoutes = () => (
   <Fragment>
-    <Route path='/' exact component={ PageHome } />
-    <Route path='/catalog/books' component={ PageBooks } />
-    <Route path='/catalog/bookinstances' component={ PageBookInstances } />
-    <Route path='/catalog/authors' component={ PageAuthors } />
-    <Route path='/catalog/genres' component={ PageGenres } />
+    <Route path="/" exact component={PageHome} />
+    <Route path="/catalog/books" component={PageBooks} />
+    <Route path="/catalog/bookinstances" component={PageBookInstances} />
+    <Route path="/catalog/authors" component={PageAuthors} />
+    <Route path="/catalog/genres" component={PageGenres} />
 
-    <Route path='/catalog/create/genre' component={ PageGenreCreate } />
-    <Route path='/catalog/create/author' component={ PageAuthorCreate } />
+    <Route path="/catalog/create/genre" component={PageGenreCreate} />
+    <Route path="/catalog/create/author" component={PageAuthorCreate} />
+    <Route path="/catalog/create/book" component={PageBookCreate} />
 
-    <Route path='/catalog/book/:id' component={ PageBookDetail } />
-    <Route path='/catalog/bookinstance/:id' component={ PageBookInstanceDetail } />
-    <Route path='/catalog/author/:id' component={ PageAuthorDetail } />
-    <Route path='/catalog/genre/:id' component={ PageGenreDetail } />
+    <Route path="/catalog/book/:id" component={PageBookDetail} />
+    <Route
+      path="/catalog/bookinstance/:id"
+      component={PageBookInstanceDetail}
+    />
+    <Route path="/catalog/author/:id" component={PageAuthorDetail} />
+    <Route path="/catalog/genre/:id" component={PageGenreDetail} />
   </Fragment>
 )
 

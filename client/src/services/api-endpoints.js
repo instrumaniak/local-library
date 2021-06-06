@@ -17,4 +17,5 @@ export const URL = {
   // post method urls
   genre_create: `${basePath}/catalog/genre/create`,
   author_create: `${basePath}/catalog/author/create`,
+  book_create: `${basePath}/catalog/book/create`,
 }

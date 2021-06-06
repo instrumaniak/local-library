@@ -153,7 +153,11 @@ exports.book_create_post = [
       book.save(err => {
         if(err) return next(err)
 
-        res.redirect(book.url)
+        return res.status(201).json({
+          message: "success",
+          book_id: book._id,
+          errors: []
+        })
       })
     }
   }
