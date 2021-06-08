@@ -1,3 +1,4 @@
+const { body, validationResult } = require('express-validator')
 const BookInstance = require('../models/bookinstance')
 
 // Display list of all BookInstances.
@@ -40,9 +41,49 @@ exports.bookinstance_create_get = function (req, res) {
 }
 
 // Handle BookInstance create on POST.
-exports.bookinstance_create_post = function (req, res) {
-  res.send('NOT IMPLEMENTED: BookInstance create POST')
-}
+exports.bookinstance_create_post = [
+  // validate & sanitize fields
+  body('book', 'Book must be specified').trim().isLength({ min: 1 }).escape(),
+  body('imprint', 'Imprint must be specified')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('status').escape(),
+  body('due_back', 'Invalid date')
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .toDate(),
+
+  // process request after validation & sanitization
+  (req, res, next) => {
+    const errors = validationResult(req)
+    const { book, imprint, status, due_back } = req.body
+    const bookinstance = new BookInstance({
+      book,
+      imprint,
+      status,
+      due_back,
+    })
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        message: 'Validation Error',
+        errors: errors.array(),
+      })
+    } else {
+      bookinstance.save(function (err) {
+        if (err) {
+          return next(err)
+        }
+
+        return res.status(201).json({
+          message: 'Success',
+          errors: [],
+          bookinstance_id: bookinstance.id,
+        })
+      })
+    }
+  },
+]
 
 // Display BookInstance delete form on GET.
 exports.bookinstance_delete_get = function (req, res) {
