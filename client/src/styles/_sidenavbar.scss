@@ -17,7 +17,7 @@
   // }
 
   &__seperator {
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     margin: 1.5rem 0px 1rem 0px;
   }
 
@@ -32,7 +32,7 @@
       }
 
       &.active {
-        color: lighten($ll-gray-light, 40%);;
+        color: lighten($ll-gray-light, 40%);
       }
     }
   }
@@ -47,11 +47,12 @@
     margin-bottom: 0.25rem;
 
     a {
+      text-decoration: none;
       color: lighten($ll-gray-light, 30%);
       padding-left: 10px;
 
       &.active {
-        border-left: 2px solid lighten($ll-gray-light, 50%);;
+        border-left: 2px solid lighten($ll-gray-light, 50%);
         padding-left: 8px;
         color: lighten($ll-gray-light, 55%);
       }
