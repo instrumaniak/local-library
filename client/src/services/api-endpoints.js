@@ -18,4 +18,5 @@ export const URL = {
   genre_create: `${basePath}/catalog/genre/create`,
   author_create: `${basePath}/catalog/author/create`,
   book_create: `${basePath}/catalog/book/create`,
+  bookinstance_create: `${basePath}/catalog/bookinstance/create`,
 }
