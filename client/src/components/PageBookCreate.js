@@ -92,7 +92,7 @@ const PageBookCreate = () => {
           <br />
           <label>Author:</label>
           <select
-            className="form-control"
+            className="form-select"
             placeholder="Select author"
             name="author"
             value={formData.author}
@@ -106,6 +106,7 @@ const PageBookCreate = () => {
             ))}
           </select>
         </div>
+        <br />
         <div className="form-group">
           <label>Summary:</label>
           <textarea

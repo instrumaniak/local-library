@@ -61,7 +61,7 @@ const PageBookInstanceCreate = () => {
         <div className="form-group">
           <label>Book:</label>
           <select
-            className="form-control"
+            className="form-select"
             placeholder="Select book"
             name="book"
             value={formData.book}
@@ -75,6 +75,7 @@ const PageBookInstanceCreate = () => {
             ))}
           </select>
         </div>
+        <br />
         <div className="form-group">
           <label>Imprint:</label>
           <input
@@ -96,7 +97,7 @@ const PageBookInstanceCreate = () => {
         <br />
         <label>Status:</label>
         <select
-          className="form-control"
+          className="form-select"
           placeholder="Select status"
           name="status"
           value={formData.status}

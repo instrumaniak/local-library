@@ -10,53 +10,46 @@ class PageAuthorCreate extends Component {
     date_of_birth: '',
     date_of_death: '',
     isError: false,
-    submit_message: ''
+    submit_message: '',
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const { name, value } = event.target
 
     this.setState({
-      [name]: value
+      [name]: value,
     })
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault()
 
-    const {
-      first_name,
-      family_name,
-      date_of_birth,
-      date_of_death,
-    } = this.state
+    const { first_name, family_name, date_of_birth, date_of_death } = this.state
 
     postData(URL.author_create, {
       first_name,
       family_name,
       date_of_birth,
-      date_of_death
-    })
-      .then(data => {
-        console.log(data)
+      date_of_death,
+    }).then((data) => {
+      console.log(data)
 
-        if(isEmpty(data.errors)) {
-          this.setState({
-            first_name: '',
-            family_name: '',
-            date_of_birth: '',
-            date_of_death: '',
-            isError: false,
-            submit_message: `Created Author: ${data.author.name}`
-          })
-        }
-        else {
-          this.setState({
-            isError: true,
-            submit_message: ''
-          })
-        }
-      })
+      if (isEmpty(data.errors)) {
+        this.setState({
+          first_name: '',
+          family_name: '',
+          date_of_birth: '',
+          date_of_death: '',
+          isError: false,
+          submit_message: `Created Author: ${data.author.name}`,
+        })
+      } else {
+        this.setState({
+          isError: true,
+          submit_message: '',
+        })
+      }
+    })
   }
 
   render() {
@@ -66,60 +59,58 @@ class PageAuthorCreate extends Component {
       date_of_birth,
       date_of_death,
       isError,
-      submit_message
+      submit_message,
     } = this.state
 
     return (
       <div>
         <h1>Create new Author</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className='form-group'>
+          <div className="form-group">
             <label>First Name:</label>
             <input
-              className='form-control'
-              placeholder='First Name'
-              name='first_name'
+              className="form-control"
+              placeholder="First Name"
+              name="first_name"
               value={first_name}
               onChange={this.handleInputChange}
             />
-            <br/>
+            <br />
             <label>Family Name:</label>
             <input
-              className='form-control'
-              placeholder='Family Name'
-              name='family_name'
+              className="form-control"
+              placeholder="Family Name"
+              name="family_name"
               value={family_name}
               onChange={this.handleInputChange}
             />
           </div>
-          <div className='form-group'>
+          <br />
+          <div className="form-group">
             <label>Date of Birth:</label>
             <input
-              className='form-control'
-              type='date'
-              name='date_of_birth'
+              className="form-control"
+              type="date"
+              name="date_of_birth"
               value={date_of_birth}
               onChange={this.handleInputChange}
             />
-            <br/>
+            <br />
             <label>Date of Death:</label>
             <input
-              className='form-control'
-              type='date'
-              name='date_of_death'
+              className="form-control"
+              type="date"
+              name="date_of_death"
               value={date_of_death}
               onChange={this.handleInputChange}
             />
           </div>
-          <br/>
+          <br />
 
-          { isError && <p>Error: Server rejected input.</p> }
-          { submit_message && <p>{submit_message}</p> }
+          {isError && <p>Error: Server rejected input.</p>}
+          {submit_message && <p>{submit_message}</p>}
 
-          <button
-            className='btn btn-primary'
-            type='submit'
-          >
+          <button className="btn btn-primary" type="submit">
             Submit
           </button>
         </form>
