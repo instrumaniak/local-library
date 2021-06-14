@@ -1,6 +1,7 @@
 /**
  *  Local Library API Server
  */
+require('dotenv').config()
 
 // import required packages
 const createError = require('http-errors')
@@ -16,7 +17,7 @@ const cors = require('cors')
 const apiRouter = require('./routes/index')
 
 // import config
-const config = require('./config/db')
+const config = require('./config')
 
 /**
  * Setup mongodb/mongoose

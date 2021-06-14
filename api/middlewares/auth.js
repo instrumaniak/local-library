@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { secret } = require('../config/db')
+const { JWT_SECRET } = require('../config')
 
 exports.requiresAuthentication = (req, res, next) => {
   const authHeader = req.headers.authorization
@@ -7,7 +7,7 @@ exports.requiresAuthentication = (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(' ')[1] // extract token
     try {
-      result = jwt.verify(token, secret)
+      result = jwt.verify(token, JWT_SECRET)
       req.decodedJWT = result
       next()
     } catch (err) {

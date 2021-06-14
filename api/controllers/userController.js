@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
-const config = require('../config/db')
+const config = require('../config')
 
 /**
  *  Register a user
@@ -127,9 +127,9 @@ exports.login = (req, res, next) => {
               email: user.email,
             },
           },
-          config.secret,
+          config.JWT_SECRET,
           {
-            expiresIn: 604800, // 1 week
+            expiresIn: config.JWT_EXPIRES_IN,
           }
         )
 
