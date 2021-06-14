@@ -8,7 +8,6 @@ exports.requiresAuthentication = (req, res, next) => {
     const token = authHeader.split(' ')[1] // extract token
     try {
       result = jwt.verify(token, secret)
-      console.log(result)
       req.decodedJWT = result
       next()
     } catch (err) {

@@ -6,7 +6,8 @@
     "dev": "cross-env DEBUG=tutorial:* yarn dev-start",
     "dev-start": "nodemon ./bin/www",
     "start": "node ./bin/www",
-    "seed": "node populatedb.js"
+    "seed": "node populatedb.js",
+    "lint": "eslint . --ext .js"
   },
   "dependencies": {
     "async": "^3.2.0",
