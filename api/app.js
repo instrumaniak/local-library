@@ -11,7 +11,6 @@ const mongoose = require('mongoose')
 const path = require('path')
 const logger = require('morgan')
 const cors = require('cors')
-const passport = require('passport')
 
 // import routes
 const apiRouter = require('./routes/index')
@@ -44,10 +43,6 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cors())
-app.use(passport.initialize())
-
-// setup passport for JWT
-require('./config/passport')(passport)
 
 // setup api routes
 app.use('/api', apiRouter)
@@ -66,15 +61,14 @@ app.use(function (req, res, next) {
 })
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
 
   // render the error page
-  console.log(JSON.stringify(err))
   res.status(err.status || 500)
-  return res.json({ errors: [err.message]})
+  return res.json({ errors: [err.message] })
 })
 
 module.exports = app
