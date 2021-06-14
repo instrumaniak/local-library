@@ -16,6 +16,8 @@ import PageGenreCreate from './PageGenreCreate'
 import PageAuthorCreate from './PageAuthorCreate'
 import PageBookCreate from './PageBookCreate'
 import PageBookInstanceCreate from './PageBookInstanceCreate'
+import PageSignUp from './PageSignUp'
+import PageLogIn from './PageLogIn'
 
 const PageRoutes = () => (
   <Fragment>
@@ -40,6 +42,9 @@ const PageRoutes = () => (
     />
     <Route path="/catalog/author/:id" component={PageAuthorDetail} />
     <Route path="/catalog/genre/:id" component={PageGenreDetail} />
+
+    <Route path="/user/signup" component={PageSignUp} />
+    <Route path="/user/login" component={PageLogIn} />
   </Fragment>
 )
 
