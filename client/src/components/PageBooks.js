@@ -28,7 +28,10 @@ class PageBooks extends Component {
               <div className="col-md-6 col-lg-3 mb-3" key={id}>
                 <div class="card card-book-container">
                   <div className="book-image-container">
-                    <img src="https://via.placeholder.com/125x200" alt="..." />
+                    <img
+                      src="/assets/images/bookcover-placeholder.jpg"
+                      alt="book-cover-placeholder"
+                    />
                   </div>
                   <div class="card-body">
                     <h6 class="card-title">{book.title}</h6>
