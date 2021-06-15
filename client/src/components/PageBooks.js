@@ -7,33 +7,45 @@ import { URL } from '../services/api-endpoints'
 class PageBooks extends Component {
   state = {
     title: '',
-    book_list: []
+    book_list: [],
   }
   componentDidMount() {
-    getData(URL.books)
-      .then(data => this.setState(data))
+    getData(URL.books).then((data) => this.setState(data))
   }
   render() {
-    const { title, book_list } = this.state
-    //const total_books = book_list.length
+    const { book_list } = this.state
 
     return (
-      <div>
-        <h1>{title}</h1>
-        <ul>
-          { !isEmpty(book_list) && book_list.map((book, id) => (
-              <li key={id}>
-                <Link to={book.url}>
-                  {book.title}
-                </Link>
-                &nbsp; | {book.author.name}
-              </li>
-            ))
-          }
+      <div className="ll-page-books-container">
+        <h1>Books</h1>
+        <hr className="mb-4 " />
 
-          { isEmpty(book_list) && <li>There are no books.</li> }
+        {isEmpty(book_list) && <div>There are no books.</div>}
 
-        </ul>
+        <div className="row">
+          {!isEmpty(book_list) &&
+            book_list.map((book, id) => (
+              <div className="col-md-6 col-lg-3 mb-3" key={id}>
+                <div class="card card-book-container">
+                  <div className="book-image-container">
+                    <img src="https://via.placeholder.com/125x200" alt="..." />
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-title">{book.title}</h6>
+                    <p class="card-text">{book.author.name}</p>
+                  </div>
+                  <div className="p-3">
+                    <Link
+                      to={book.url}
+                      className="btn btn-sm btn-outline-primary"
+                    >
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     )
   }

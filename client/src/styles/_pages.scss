@@ -7,3 +7,16 @@
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
+.ll-page-books-container {
+  .card-book-container {
+    height: 100%;
+  }
+  .book-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    padding-bottom: 0;
+  }
+}
