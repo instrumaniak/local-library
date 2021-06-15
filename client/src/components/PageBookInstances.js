@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { Badge } from 'reactstrap'
 import isEmpty from 'lodash.isempty'
 import { Link } from 'react-router-dom'
 import { getData } from '../services'
@@ -7,14 +6,13 @@ import { URL } from '../services/api-endpoints'
 
 class PageBookInstances extends Component {
   state = {
-    title: '',
     bookinstance_list: [],
   }
   componentDidMount() {
     getData(URL.bookinstances).then((data) => this.setState(data))
   }
   render() {
-    const { title, bookinstance_list } = this.state
+    const { bookinstance_list } = this.state
 
     const badgeColorClass = (status) => {
       switch (status) {
@@ -29,27 +27,45 @@ class PageBookInstances extends Component {
 
     return (
       <div>
-        <h1>{title}</h1>
-        <ul>
-          {!isEmpty(bookinstance_list) &&
-            bookinstance_list.map((item, id) => (
-              <li key={id}>
-                <Link to={item.url}>{item.book.title}</Link>
-                <span className={`ms-2 badge ${badgeColorClass(item.status)}`}>
-                  {item.status}
-                </span>
-                <div>{item.imprint}</div>
-                <div>{`${
-                  item.status !== 'Available'
-                    ? 'Due: ' + item.due_back_formatted
-                    : ''
-                }`}</div>
-              </li>
-            ))}
-          {isEmpty(bookinstance_list) && (
-            <li>There are not book copies in this library.</li>
-          )}
-        </ul>
+        <h1>Book Instances</h1>
+        <table className="table mt-4 mb-4">
+          <thead>
+            <tr>
+              <th scope="col">Book Title</th>
+              <th scope="col">Imprint</th>
+              <th scope="col">Status</th>
+              <th scope="col">Due Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!isEmpty(bookinstance_list) &&
+              bookinstance_list.map((item, id) => (
+                <tr key={id}>
+                  <th scope="row">
+                    <Link className="text-decoration-none" to={item.url}>
+                      {item.book.title}
+                    </Link>
+                  </th>
+                  <td>{item.imprint}</td>
+                  <td>
+                    <span
+                      className={`ms-2 badge ${badgeColorClass(item.status)}`}
+                    >
+                      {item.status}
+                    </span>
+                  </td>
+                  <td>
+                    {item.status !== 'Available'
+                      ? item.due_back_formatted
+                      : '-'}
+                  </td>
+                </tr>
+              ))}
+            {isEmpty(bookinstance_list) && (
+              <tr>There are not book copies in this library.</tr>
+            )}
+          </tbody>
+        </table>
       </div>
     )
   }
