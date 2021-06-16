@@ -24,7 +24,7 @@ exports.register = [
     .withMessage('Invalid data. Should be string.')
     .trim()
     .isLength({ min: 3 })
-    .withMessage('User fullname should be min. 3 charaters')
+    .withMessage('User ID should be min. 3 charaters')
     .escape(),
   body('email', 'Email is required')
     .isEmail()

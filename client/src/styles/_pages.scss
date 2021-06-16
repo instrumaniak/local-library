@@ -2,11 +2,19 @@
  *  Pages
  */
 
+// common page styles
+
 .ll-page-container {
   padding-top: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
+.ll-page-form-container {
+  max-width: 600px;
+}
+
+// page specific styles
 
 .ll-page-books-container {
   .card-book-container {
