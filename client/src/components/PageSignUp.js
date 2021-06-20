@@ -12,6 +12,7 @@ const PageSignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    role: '',
   })
 
   const { setFormErrors, getParamError, hasFormValidationError } =
@@ -34,6 +35,7 @@ const PageSignUp = () => {
       username: formData.username,
       email: formData.email,
       password: formData.password,
+      role: formData.role,
     }).then((data) => {
       if (isEmpty(data.errors)) {
         setFormData({
@@ -42,6 +44,7 @@ const PageSignUp = () => {
           email: '',
           password: '',
           confirmPassword: '',
+          role: '',
         })
         setFormErrors([])
         history.push('/user/login')
@@ -50,6 +53,8 @@ const PageSignUp = () => {
       }
     })
   }
+
+  const roleList = ['Reader', 'Staff', 'Admin']
 
   const isPasswordConfirmed =
     formData.password && formData.password === formData.confirmPassword
@@ -117,7 +122,7 @@ const PageSignUp = () => {
               {getParamError('password')?.msg}
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label className="form-label">Confirm Password:</label>
             <input
               className={`form-control ${hasFormValidationError('password')}`}
@@ -127,6 +132,24 @@ const PageSignUp = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
             />
+          </div>
+          <div className="mb-4">
+            <label className="form-label">Apply for role:</label>
+            <select
+              className={`form-select ${hasFormValidationError('role')}`}
+              placeholder="Select role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+            >
+              <option value="">Please Select</option>
+              {roleList.map((role, index) => (
+                <option value={role} key={index}>
+                  {role}
+                </option>
+              ))}
+            </select>
+            <div className="invalid-feedback">{getParamError('role')?.msg}</div>
           </div>
           <div className="mb-3">
             <button
