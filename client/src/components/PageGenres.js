@@ -7,26 +7,41 @@ import { URL } from '../services/api-endpoints'
 class PageGenres extends Component {
   state = {
     title: '',
-    genre_list: []
+    genre_list: [],
   }
   componentDidMount() {
-    getData(URL.genres)
-      .then(data => this.setState(data))
+    getData(URL.genres).then((data) => this.setState(data))
   }
   render() {
-    const { title, genre_list } = this.state
+    const { genre_list } = this.state
     return (
       <div>
-        <h1>{ title }</h1>
-        <ul>
-          { !isEmpty(genre_list) && genre_list.map((genre, idx) => (
-              <li key={idx}>
-                <Link to={ genre.url }>{ genre.name }</Link>
-              </li>
-          ))}
-
-          { isEmpty(genre_list) && <li>There are no genres</li> }
-        </ul>
+        <h1>Genres</h1>
+        <table className="table mt-4 mb-4">
+          <thead>
+            <tr>
+              <th scope="col">Genre</th>
+              <th scope="col">Total Books</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!isEmpty(genre_list) &&
+              genre_list.map((genre, idx) => (
+                <tr key={idx}>
+                  <th scope="row">
+                    <Link
+                      className="text-decoration-none"
+                      to={`/catalog/genre/${genre._id}`}
+                    >
+                      {genre.name}
+                    </Link>
+                  </th>
+                  <td>{genre.book_count}</td>
+                </tr>
+              ))}
+            {isEmpty(genre_list) && <tr>There are no genres</tr>}
+          </tbody>
+        </table>
       </div>
     )
   }

@@ -9,7 +9,22 @@ const Book = require('../models/book')
  */
 
 exports.genre_list = function (req, res, next) {
-  Genre.find({})
+  Genre.aggregate([
+    {
+      $lookup: {
+        from: 'books',
+        localField: '_id',
+        foreignField: 'genre',
+        as: 'books',
+      },
+    },
+    {
+      $project: {
+        name: '$name',
+        book_count: { $size: '$books' },
+      },
+    },
+  ])
     .sort('name')
     .exec((err, genre_list) => {
       if (err) return next(err)
