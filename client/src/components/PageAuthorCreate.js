@@ -64,8 +64,11 @@ class PageAuthorCreate extends Component {
 
     return (
       <div>
-        <h1>Create new Author</h1>
-        <form onSubmit={this.handleSubmit}>
+        <h1>Create Author</h1>
+        <form
+          onSubmit={this.handleSubmit}
+          className="mt-4 ll-page-form-container"
+        >
           <div className="form-group">
             <label>First Name:</label>
             <input

@@ -7,7 +7,7 @@ const PageLogIn = () => {
   return (
     <div>
       <h1>Login</h1>
-      <div className="mt-4">
+      <div className="mt-4 ll-page-form-container">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Username (ID):</label>

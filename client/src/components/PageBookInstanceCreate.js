@@ -56,8 +56,8 @@ const PageBookInstanceCreate = () => {
 
   return (
     <div>
-      <h1>Create new book instance</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>Create Book Instance</h1>
+      <form onSubmit={handleSubmit} className="mt-4 ll-page-form-container">
         <div className="form-group">
           <label>Book:</label>
           <select

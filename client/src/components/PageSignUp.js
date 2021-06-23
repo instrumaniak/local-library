@@ -66,7 +66,6 @@ const PageSignUp = () => {
         <small>Create new user account</small>
       </p>
       <div className="mt-4 ll-page-form-container">
-        <hr />
         <form onSubmit={handleSubmit}>
           <div className="mb-3 has-validation">
             <label className="form-label">Full Name:</label>
