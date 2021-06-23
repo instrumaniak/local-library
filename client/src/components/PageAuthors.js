@@ -7,27 +7,41 @@ import { URL } from '../services/api-endpoints'
 class PageAuthors extends Component {
   state = {
     title: '',
-    author_list: []
+    author_list: [],
   }
   componentDidMount() {
-    getData(URL.authors)
-      .then(data => this.setState(data))
+    getData(URL.authors).then((data) => this.setState(data))
   }
   render() {
-    const { title, author_list } = this.state
+    const { author_list } = this.state
     return (
       <div>
-        <h1>{ title }</h1>
-        <ul>
-          { !isEmpty(author_list) && author_list.map((author, idx) => (
-              <li key={idx}>
-                <Link to={ author.url }>{ author.name }</Link>{' '}
-                { author.lifespan && <span>( { author.lifespan } )</span> }
-              </li>
-          ))}
-
-          { isEmpty(author_list) && <li>There are no authors</li> }
-        </ul>
+        <h1>Authors</h1>
+        <table className="table mt-4 mb-4">
+          <thead>
+            <tr>
+              <th scope="col">Author</th>
+              <th scope="col">Total Books</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!isEmpty(author_list) &&
+              author_list.map((author, idx) => (
+                <tr key={idx}>
+                  <th scope="row">
+                    <Link
+                      className="text-decoration-none"
+                      to={`/catalog/author/${author._id}`}
+                    >
+                      {author.name}
+                    </Link>
+                  </th>
+                  <td>{author.book_count}</td>
+                </tr>
+              ))}
+            {isEmpty(author_list) && <tr>There are no authors</tr>}
+          </tbody>
+        </table>
       </div>
     )
   }

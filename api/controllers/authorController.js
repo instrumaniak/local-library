@@ -6,16 +6,34 @@ const Book = require('../models/book')
 
 // Display list of all Authors
 exports.author_list = function (req, res, next) {
-  Author.find()
-    .sort('family_name')
-    .exec((err, list_authors) => {
-      if (err) return next(err)
+  Author.aggregate([
+    {
+      $lookup: {
+        from: 'books',
+        localField: '_id',
+        foreignField: 'author',
+        as: 'books',
+      },
+    },
+    {
+      $sort: {
+        first_name: 1,
+      },
+    },
+    {
+      $project: {
+        name: { $concat: ['$first_name', ' ', '$family_name'] },
+        book_count: { $size: '$books' },
+      },
+    },
+  ]).exec((err, list_authors) => {
+    if (err) return next(err)
 
-      res.json({
-        title: 'Author List',
-        author_list: list_authors,
-      })
+    res.json({
+      title: 'Author List',
+      author_list: list_authors,
     })
+  })
 }
 
 // Display detail page for a specific Author
