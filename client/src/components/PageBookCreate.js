@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { URL } from '../services/api-endpoints'
 import { getData, postData } from '../services'
 import isEmpty from 'lodash.isempty'
+import WindowTitle from './WindowTitle'
 
 const PageBookCreate = () => {
   const [formData, setFormData] = useState({
@@ -78,6 +79,7 @@ const PageBookCreate = () => {
 
   return (
     <div>
+      <WindowTitle title="Create Book" />
       <h1>Create Book</h1>
       <form onSubmit={handleSubmit} className="mt-4 ll-page-form-container">
         <div className="form-group">

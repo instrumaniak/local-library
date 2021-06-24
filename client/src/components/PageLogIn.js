@@ -1,4 +1,5 @@
 import React from 'react'
+import WindowTitle from './WindowTitle'
 
 const PageLogIn = () => {
   const handleSubmit = (event) => {
@@ -6,6 +7,7 @@ const PageLogIn = () => {
   }
   return (
     <div>
+      <WindowTitle title="Login" />
       <h1>Login</h1>
       <div className="mt-4 ll-page-form-container">
         <form onSubmit={handleSubmit}>

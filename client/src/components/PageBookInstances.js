@@ -3,6 +3,7 @@ import isEmpty from 'lodash.isempty'
 import { Link } from 'react-router-dom'
 import { getData } from '../services'
 import { URL } from '../services/api-endpoints'
+import WindowTitle from './WindowTitle'
 
 class PageBookInstances extends Component {
   state = {
@@ -27,6 +28,7 @@ class PageBookInstances extends Component {
 
     return (
       <div>
+        <WindowTitle title="Book Instances" />
         <h1>Book Instances</h1>
         <table className="table mt-4 mb-4">
           <thead>

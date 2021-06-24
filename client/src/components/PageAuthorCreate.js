@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { URL } from '../services/api-endpoints'
 import { postData } from '../services'
 import isEmpty from 'lodash.isempty'
+import WindowTitle from './WindowTitle'
 
 class PageAuthorCreate extends Component {
   state = {
@@ -64,6 +65,7 @@ class PageAuthorCreate extends Component {
 
     return (
       <div>
+        <WindowTitle title="Create Author" />
         <h1>Create Author</h1>
         <form
           onSubmit={this.handleSubmit}

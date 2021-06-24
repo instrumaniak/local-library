@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import isEmpty from 'lodash.isempty'
 import { getData } from '../services'
 import { URL } from '../services/api-endpoints'
+import WindowTitle from './WindowTitle'
 
 class PageAuthors extends Component {
   state = {
@@ -16,6 +17,7 @@ class PageAuthors extends Component {
     const { author_list } = this.state
     return (
       <div>
+        <WindowTitle title="Authors" />
         <h1>Authors</h1>
         <table className="table mt-4 mb-4">
           <thead>

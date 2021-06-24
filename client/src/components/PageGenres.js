@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import isEmpty from 'lodash.isempty'
 import { getData } from '../services'
 import { URL } from '../services/api-endpoints'
+import WindowTitle from './WindowTitle'
 
 class PageGenres extends Component {
   state = {
@@ -16,6 +17,7 @@ class PageGenres extends Component {
     const { genre_list } = this.state
     return (
       <div>
+        <WindowTitle title="Genres" />
         <h1>Genres</h1>
         <table className="table mt-4 mb-4">
           <thead>

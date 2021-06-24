@@ -4,6 +4,7 @@ import { postData } from '../services'
 import { URL } from '../services/api-endpoints'
 import isEmpty from 'lodash.isempty'
 import useFormErrors from '../hooks/useFormErrors'
+import WindowTitle from './WindowTitle'
 
 const PageSignUp = () => {
   const [formData, setFormData] = useState({
@@ -61,6 +62,7 @@ const PageSignUp = () => {
 
   return (
     <div className="ll-page-signup-container">
+      <WindowTitle title="Sign Up" />
       <h1>Sign Up</h1>
       <p className="text-muted">
         <small>Create new user account</small>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { URL } from '../services/api-endpoints'
 import { postData } from '../services'
 import isEmpty from 'lodash.isempty'
+import WindowTitle from './WindowTitle'
 
 class PageGenreCreate extends Component {
   state = {
@@ -41,6 +42,7 @@ class PageGenreCreate extends Component {
 
     return (
       <div>
+        <WindowTitle title="Create Genre" />
         <h1>Create Genre</h1>
         <form
           onSubmit={this.handleSubmit}
