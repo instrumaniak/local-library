@@ -1,8 +1,9 @@
 const async = require('async')
-const { body, validationResult } = require('express-validator')
+const { body } = require('express-validator')
 
 const Genre = require('../models/genre')
 const Book = require('../models/book')
+const { checkValidationErrors } = require('../middlewares/validationErrors')
 
 /**
  *  Display list of all Genre.
@@ -81,47 +82,59 @@ exports.genre_create_get = function (req, res) {
  */
 exports.genre_create_post = [
   // Validate & sanitize
-  body('name', 'Genre name required').isLength({ min: 1 }).trim().escape(),
+  body('name', 'Genre name required')
+    .trim()
+    .isLength({ min: 3, max: 100 })
+    .withMessage('Genre name length should be between 3 & 100 characters')
+    .escape(),
+
+  checkValidationErrors,
 
   // Process request after validation and sanitization
   (req, res, next) => {
-    // Extract the validation errors from a request
-    const errors = validationResult(req)
+    // Check if Genre with same name already exists
+    Genre.findOne({ name: req.body.name }).exec((err, found_genre) => {
+      if (err) {
+        return next(err)
+      }
+      if (found_genre) {
+        return res.status(400).json({
+          success: false,
+          errors: [
+            {
+              param: 'name',
+              msg: 'Genre already exists',
+            },
+          ],
+        })
+      } else {
+        // Create a genre object with escaped and trimmed data
+        let genre = new Genre({
+          name: req.body.name,
+        })
+        genre.save((err) => {
+          if (err) {
+            return res.status(400).json({
+              success: false,
+              errors: [
+                {
+                  param: 'name',
+                  msg: 'Failed to save genre',
+                },
+              ],
+            })
+          }
 
-    if (!errors.isEmpty()) {
-      // There are errors. Render the form again with
-      // sanitized values/error messages
-      res.json({
-        title: 'Create Genre',
-        //genre,
-        errors: errors.array(),
-      })
-      return
-    } else {
-      // Data from the form is valid
-      // Check if Genre with same name already exists
-      Genre.findOne({ name: req.body.name }).exec((err, found_genre) => {
-        if (err) {
-          return next(err)
-        }
-        if (found_genre) {
-          res.redirect(found_genre.url)
-        } else {
-          // Create a genre object with escaped and trimmed data
-          let genre = new Genre({
-            name: req.body.name,
+          return res.status(201).json({
+            success: true,
+            message: 'Genre created successfully',
+            id: genre._id,
+            name: genre.name,
           })
-          genre.save((err) => {
-            if (err) {
-              return next(err)
-            }
-
-            // Genre saved, should go to genre detail page
-            res.redirect(genre.url)
-          })
-        }
-      })
-    }
+        })
+      }
+    })
+    // }
   },
 ]
 

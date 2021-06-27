@@ -1,73 +1,68 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { URL } from '../services/api-endpoints'
 import { postData } from '../services'
 import isEmpty from 'lodash.isempty'
 import WindowTitle from './WindowTitle'
+import useFormErrors from '../hooks/useFormErrors'
 
-class PageGenreCreate extends Component {
-  state = {
-    genre_input: '',
-    isError: false,
-    submit_message: '',
-  }
-  handleInput = (e) => {
-    this.setState({
-      genre_input: e.target.value,
-      isError: false,
-      submit_message: '',
+const PageGenreCreate = () => {
+  const [formData, setFormData] = useState({
+    genre: '',
+  })
+
+  const { setFormErrors, getParamError, hasFormValidationError } =
+    useFormErrors()
+
+  const history = useHistory()
+
+  const handleInput = (e) => {
+    setFormData({
+      genre: e.target.value,
     })
   }
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
-    const { genre_input } = this.state
-
-    postData(URL.genre_create, { name: genre_input }).then((data) => {
+    postData(URL.genre_create, { name: formData.genre }).then((data) => {
       if (isEmpty(data.errors)) {
-        this.setState({
-          genre_input: '',
-          isError: false,
-          submit_message: `Created genre: ${data.genre.name}`,
+        setFormData({
+          genre: '',
         })
+        setFormErrors([])
+        history.push(`/catalog/genre/${data.id}`)
       } else {
-        this.setState({
-          isError: true,
-          submit_message: '',
-        })
+        setFormErrors(data.errors)
       }
     })
   }
-  render() {
-    const { genre_input, isError, submit_message } = this.state
 
-    return (
-      <div>
-        <WindowTitle title="Create Genre" />
-        <h1>Create Genre</h1>
-        <form
-          onSubmit={this.handleSubmit}
-          className="mt-4 ll-page-form-container"
+  return (
+    <div>
+      <WindowTitle title="Create Genre" />
+      <h1>Create Genre</h1>
+      <form onSubmit={handleSubmit} className="mt-4 ll-page-form-container">
+        <div className="mb-3 has-validation">
+          <label className="form-label">Genre:</label>
+          <input
+            className={`form-control ${hasFormValidationError('name')}`}
+            placeholder="Fantasy, Poetry etc."
+            name="name"
+            value={formData.genre}
+            onChange={handleInput}
+          />
+          <div className="invalid-feedback">{getParamError('name')?.msg}</div>
+        </div>
+        <button
+          className="btn btn-primary"
+          type="submit"
+          disabled={!formData.genre}
         >
-          <div className="form-group">
-            <label>Genre:</label>
-            <input
-              className="form-control"
-              placeholder="Fantasy, Poetry etc."
-              name="name"
-              value={genre_input}
-              onChange={this.handleInput}
-            />
-            <br />
-            {isError && <p>Error: Server rejected input.</p>}
-            {submit_message && <p>{submit_message}</p>}
-            <button className="btn btn-primary" type="submit">
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    )
-  }
+          Submit
+        </button>
+      </form>
+    </div>
+  )
 }
 
 export default PageGenreCreate
