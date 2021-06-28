@@ -64,7 +64,9 @@ class PageBookInstances extends Component {
                 </tr>
               ))}
             {isEmpty(bookinstance_list) && (
-              <tr>There are not book copies in this library.</tr>
+              <tr>
+                <td colSpan={4}>There are not book copies in this library.</td>
+              </tr>
             )}
           </tbody>
         </table>

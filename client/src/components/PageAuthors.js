@@ -41,7 +41,11 @@ class PageAuthors extends Component {
                   <td>{author.book_count}</td>
                 </tr>
               ))}
-            {isEmpty(author_list) && <tr>There are no authors</tr>}
+            {isEmpty(author_list) && (
+              <tr>
+                <td colSpan={2}>There are no authors</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

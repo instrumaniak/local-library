@@ -41,7 +41,11 @@ class PageGenres extends Component {
                   <td>{genre.book_count}</td>
                 </tr>
               ))}
-            {isEmpty(genre_list) && <tr>There are no genres</tr>}
+            {isEmpty(genre_list) && (
+              <tr>
+                <td colSpan={2}>There are no genres</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

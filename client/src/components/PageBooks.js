@@ -29,16 +29,16 @@ class PageBooks extends Component {
             {!isEmpty(book_list) &&
               book_list.map((book, id) => (
                 <div className="col-md-6 col-lg-3 mb-3" key={id}>
-                  <div class="card card-book-container">
+                  <div className="card card-book-container">
                     <div className="book-image-container">
                       <img
                         src="/assets/images/bookcover-placeholder.jpg"
                         alt="book-cover-placeholder"
                       />
                     </div>
-                    <div class="card-body">
-                      <h6 class="card-title">{book.title}</h6>
-                      <p class="card-text">{book.author.name}</p>
+                    <div className="card-body">
+                      <h6 className="card-title">{book.title}</h6>
+                      <p className="card-text">{book.author.name}</p>
                     </div>
                     <div className="p-3">
                       <Link
