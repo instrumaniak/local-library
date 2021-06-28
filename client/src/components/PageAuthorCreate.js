@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { URL } from '../services/api-endpoints'
 import { postData } from '../services'
 import isEmpty from 'lodash.isempty'
 import WindowTitle from './WindowTitle'
+import { withFormErrors } from '../hooks/useFormErrors'
 
 class PageAuthorCreate extends Component {
   state = {
@@ -10,13 +12,10 @@ class PageAuthorCreate extends Component {
     family_name: '',
     date_of_birth: '',
     date_of_death: '',
-    isError: false,
-    submit_message: '',
   }
 
   handleInputChange = (event) => {
     const { name, value } = event.target
-
     this.setState({
       [name]: value,
     })
@@ -24,8 +23,8 @@ class PageAuthorCreate extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-
     const { first_name, family_name, date_of_birth, date_of_death } = this.state
+    const { setFormErrors, history } = this.props
 
     postData(URL.author_create, {
       first_name,
@@ -33,35 +32,25 @@ class PageAuthorCreate extends Component {
       date_of_birth,
       date_of_death,
     }).then((data) => {
-      console.log(data)
-
       if (isEmpty(data.errors)) {
         this.setState({
           first_name: '',
           family_name: '',
           date_of_birth: '',
           date_of_death: '',
-          isError: false,
-          submit_message: `Created Author: ${data.author.name}`,
         })
+        setFormErrors([])
+        history.push(`/catalog/author/${data.id}`)
       } else {
-        this.setState({
-          isError: true,
-          submit_message: '',
-        })
+        setFormErrors(data.errors)
       }
     })
   }
 
   render() {
-    const {
-      first_name,
-      family_name,
-      date_of_birth,
-      date_of_death,
-      isError,
-      submit_message,
-    } = this.state
+    const { first_name, family_name, date_of_birth, date_of_death } = this.state
+
+    const { hasFormValidationError, getParamError } = this.props
 
     return (
       <div>
@@ -69,52 +58,67 @@ class PageAuthorCreate extends Component {
         <h1>Create Author</h1>
         <form
           onSubmit={this.handleSubmit}
-          className="mt-4 ll-page-form-container"
+          className="mt-4 ll-page-form-container has-validation"
         >
-          <div className="form-group">
-            <label>First Name:</label>
+          <div className="mb-3">
+            <label className="form-label">First Name:</label>
             <input
-              className="form-control"
+              className={`form-control ${hasFormValidationError('first_name')}`}
               placeholder="First Name"
               name="first_name"
               value={first_name}
               onChange={this.handleInputChange}
             />
-            <br />
-            <label>Family Name:</label>
+            <div className="invalid-feedback">
+              {getParamError('first_name')?.msg}
+            </div>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Family Name:</label>
             <input
-              className="form-control"
+              className={`form-control ${hasFormValidationError(
+                'family_name'
+              )}`}
               placeholder="Family Name"
               name="family_name"
               value={family_name}
               onChange={this.handleInputChange}
             />
+            <div className="invalid-feedback">
+              {getParamError('family_name')?.msg}
+            </div>
           </div>
-          <br />
-          <div className="form-group">
-            <label>Date of Birth:</label>
+
+          <div className="mb-3">
+            <label className="form-label">Date of Birth:</label>
             <input
-              className="form-control"
+              className={`form-control ${hasFormValidationError(
+                'date_of_birth'
+              )}`}
               type="date"
               name="date_of_birth"
               value={date_of_birth}
               onChange={this.handleInputChange}
             />
-            <br />
-            <label>Date of Death:</label>
+            <div className="invalid-feedback">
+              {getParamError('date_of_birth')?.msg}
+            </div>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Date of Death:</label>
             <input
-              className="form-control"
+              className={`form-control ${hasFormValidationError(
+                'date_of_death'
+              )}`}
               type="date"
               name="date_of_death"
               value={date_of_death}
               onChange={this.handleInputChange}
             />
+            <div className="invalid-feedback">
+              {getParamError('date_of_death')?.msg}
+            </div>
           </div>
-          <br />
-
-          {isError && <p>Error: Server rejected input.</p>}
-          {submit_message && <p>{submit_message}</p>}
-
           <button className="btn btn-primary" type="submit">
             Submit
           </button>
@@ -124,4 +128,4 @@ class PageAuthorCreate extends Component {
   }
 }
 
-export default PageAuthorCreate
+export default withRouter(withFormErrors(PageAuthorCreate))
