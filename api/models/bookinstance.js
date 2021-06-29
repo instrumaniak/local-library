@@ -15,7 +15,10 @@ const BookInstanceSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ['Available', 'Maintenance', 'Loaned', 'Reserved'],
+      enum: {
+        values: ['Available', 'Maintenance', 'Loaned', 'Reserved'],
+        message: '{VALUE} is not supported',
+      },
       default: 'Maintenance',
     },
     due_back: { type: Date, default: Date.now },

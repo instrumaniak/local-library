@@ -1,5 +1,7 @@
-const { body, validationResult } = require('express-validator')
+const { body } = require('express-validator')
 const BookInstance = require('../models/bookinstance')
+const { transformModelErrors } = require('../helpers/errors')
+const { checkValidationErrors } = require('../middlewares/validationErrors')
 
 // Display list of all BookInstances.
 exports.bookinstance_list = function (req, res, next) {
@@ -48,15 +50,16 @@ exports.bookinstance_create_post = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body('status').escape(),
+  body('status', 'Status is required').trim().isLength({ min: 1 }).escape(),
   body('due_back', 'Invalid date')
     .optional({ checkFalsy: true })
     .isISO8601()
     .toDate(),
 
+  checkValidationErrors,
+
   // process request after validation & sanitization
-  (req, res, next) => {
-    const errors = validationResult(req)
+  (req, res) => {
     const { book, imprint, status, due_back } = req.body
     const bookinstance = new BookInstance({
       book,
@@ -64,24 +67,16 @@ exports.bookinstance_create_post = [
       status,
       due_back,
     })
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        message: 'Validation Error',
-        errors: errors.array(),
+    bookinstance.save(function (err) {
+      if (err) {
+        return res.status(400).json(transformModelErrors(err.errors))
+      }
+      return res.status(201).json({
+        message: 'Success',
+        errors: [],
+        bookinstance_id: bookinstance.id,
       })
-    } else {
-      bookinstance.save(function (err) {
-        if (err) {
-          return next(err)
-        }
-
-        return res.status(201).json({
-          message: 'Success',
-          errors: [],
-          bookinstance_id: bookinstance.id,
-        })
-      })
-    }
+    })
   },
 ]
 
