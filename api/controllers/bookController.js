@@ -1,11 +1,13 @@
 const async = require('async')
-const { body, validationResult } = require('express-validator')
+const { body } = require('express-validator')
 
 // import models
 const Book = require('../models/book')
 const Author = require('../models/author')
 const Genre = require('../models/genre')
 const BookInstance = require('../models/bookinstance')
+const { transformModelErrors } = require('../helpers/errors')
+const { checkValidationErrors } = require('../middlewares/validationErrors')
 
 exports.index = (req, res) => {
   async.parallel(
@@ -135,12 +137,10 @@ exports.book_create_post = [
   body('isbn', 'ISBN must not be empty').trim().isLength({ min: 1 }).escape(),
   body('genre.*').escape(),
 
-  // Process request after validation and sanitization
-  (req, res, next) => {
-    // Extract the validation errors from a request
-    const errors = validationResult(req)
+  checkValidationErrors,
 
-    // Create a Book object with escaped & trimmed data
+  // Process request after validation and sanitization
+  (req, res) => {
     const { title, author, summary, isbn, genre } = req.body
 
     let book = new Book({
@@ -151,22 +151,17 @@ exports.book_create_post = [
       genre,
     })
 
-    if (!errors.isEmpty()) {
-      // There are errors, just send those
-      res.json({ title: 'Create Book', errors: errors.array() })
-      return
-    } else {
-      // Data is valid so save book.
-      book.save((err) => {
-        if (err) return next(err)
+    book.save((err) => {
+      if (err) {
+        return res.status(400).json(transformModelErrors(err.errors))
+      }
 
-        return res.status(201).json({
-          message: 'success',
-          book_id: book._id,
-          errors: [],
-        })
+      return res.status(201).json({
+        message: 'success',
+        book_id: book._id,
+        errors: [],
       })
-    }
+    })
   },
 ]
 

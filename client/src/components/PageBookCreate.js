@@ -4,6 +4,7 @@ import { URL } from '../services/api-endpoints'
 import { getData, postData } from '../services'
 import isEmpty from 'lodash.isempty'
 import WindowTitle from './WindowTitle'
+import useFormErrors from '../hooks/useFormErrors'
 
 const PageBookCreate = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +16,9 @@ const PageBookCreate = () => {
 
   const [authorList, setAuthorList] = useState([])
   const [genreList, setGenreList] = useState([])
-  const [hasError, setHasError] = useState(false)
+
+  const { setFormErrors, getParamError, hasFormValidationError } =
+    useFormErrors()
 
   const history = useHistory()
 
@@ -25,7 +28,6 @@ const PageBookCreate = () => {
       ...formData,
       [name]: value,
     })
-    setHasError(false)
   }
 
   const handleSubmit = (e) => {
@@ -49,7 +51,7 @@ const PageBookCreate = () => {
         setGenreList(genreList.map((genre) => ({ ...genre, checked: false })))
         history.push(`/catalog/book/${data.book_id}`)
       } else {
-        setHasError(true)
+        setFormErrors(data.errors)
       }
     })
   }
@@ -69,7 +71,7 @@ const PageBookCreate = () => {
     getData(URL.genres).then((data) => {
       setGenreList(
         data.genre_list.map((genre) => ({
-          id: genre.id,
+          id: genre._id,
           name: genre.name,
           checked: false,
         }))
@@ -81,20 +83,25 @@ const PageBookCreate = () => {
     <div>
       <WindowTitle title="Create Book" />
       <h1>Create Book</h1>
-      <form onSubmit={handleSubmit} className="mt-4 ll-page-form-container">
-        <div className="form-group">
-          <label>Title:</label>
+      <form
+        onSubmit={handleSubmit}
+        className="mt-4 mb-4 ll-page-form-container has-validation"
+      >
+        <div className="mb-3">
+          <label className="form-label">Title:</label>
           <input
-            className="form-control"
+            className={`form-control ${hasFormValidationError('title')}`}
             placeholder="Name of book"
             name="title"
             value={formData.title}
             onChange={handleInputChange}
           />
-          <br />
-          <label>Author:</label>
+          <div className="invalid-feedback">{getParamError('title')?.msg}</div>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Author:</label>
           <select
-            className="form-select"
+            className={`form-select ${hasFormValidationError('author')}`}
             placeholder="Select author"
             name="author"
             value={formData.author}
@@ -102,51 +109,58 @@ const PageBookCreate = () => {
           >
             <option value="">Please Select</option>
             {authorList.map((author, index) => (
-              <option value={author.id} key={index}>
+              <option value={author._id} key={index}>
                 {author.name}
               </option>
             ))}
           </select>
+          <div className="invalid-feedback">{getParamError('author')?.msg}</div>
         </div>
-        <br />
-        <div className="form-group">
-          <label>Summary:</label>
+
+        <div className="mb-3">
+          <label className="form-label">Summary:</label>
           <textarea
-            className="form-control"
+            className={`form-control ${hasFormValidationError('summary')}`}
             name="summary"
             value={formData.summary}
             onChange={handleInputChange}
             rows={6}
           />
-          <br />
-          <label>ISBN:</label>
+          <div className="invalid-feedback">
+            {getParamError('summary')?.msg}
+          </div>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">ISBN:</label>
           <input
-            className="form-control"
+            className={`form-control ${hasFormValidationError('isbn')}`}
             name="isbn"
             value={formData.isbn}
             onChange={handleInputChange}
           />
+          <div className="invalid-feedback">{getParamError('isbn')?.msg}</div>
         </div>
-        <br />
-        <label>Genre:</label>
-        <div>
-          {genreList.map((genre, index) => (
-            <label key={index}>
-              <input
-                type="checkbox"
-                checked={genre.checked}
-                onChange={() => handleGenre(genre.id)}
-              />{' '}
-              {genre.name} &nbsp;&nbsp;
-            </label>
-          ))}
+
+        <div className="mb-4">
+          <label className="form-label">Genre:</label>
+          <div className={`${hasFormValidationError('genre')}`}>
+            {genreList.map((genre, index) => (
+              <label key={index}>
+                <input
+                  type="checkbox"
+                  checked={genre.checked}
+                  onChange={() => handleGenre(genre.id)}
+                />{' '}
+                {genre.name} &nbsp;&nbsp;
+              </label>
+            ))}
+          </div>
+          <div className="invalid-feedback">{getParamError('genre')?.msg}</div>
         </div>
-        <br />
         <button className="btn btn-primary" type="submit">
           Submit
         </button>
       </form>
-      {hasError && <span>Error occured</span>}
     </div>
   )
 }
