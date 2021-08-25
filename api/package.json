@@ -25,7 +25,9 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.13",
     "mongoose-unique-validator": "^2.0.3",
-    "morgan": "~1.10.0"
+    "morgan": "~1.10.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
